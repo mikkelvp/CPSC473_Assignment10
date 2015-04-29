@@ -2,7 +2,11 @@ var app = angular.module('Comments', []);
 
 app.controller('CommentsCtrl', function($scope) {
     $scope.comment = '';
-    $scope.comments = [];
+    $scope.comments = ["This is the first comment!",
+        "Here's the second one!",
+        "And this is one more",
+        "Here is another one!"
+    ];
 
     $scope.addCommentFromInputBox = function() {
         $scope.comments.push($scope.comment);
