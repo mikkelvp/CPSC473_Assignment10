@@ -1,27 +1,26 @@
-var main = function () {
-    "use strict";
+var app = angular.module('Comments', []);
 
-    var addCommentFromInputBox = function () {
-        var $new_comment;
+app.controller('CommentsCtrl', function($scope) {
+    $scope.comment = '';
+    $scope.comments = [];
 
-        if ($(".comment-input input").val() !== "") {
-            $new_comment = $("<p>").text($(".comment-input input").val());
-            $new_comment.hide();
-            $(".comments").append($new_comment);
-            $new_comment.fadeIn();
-            $(".comment-input input").val("");
-        }
+    $scope.addCommentFromInputBox = function() {
+        $scope.comments.push($scope.comment);
+        $scope.comment = '';
     };
+});
 
-    $(".comment-input button").on("click", function (event) {
-        addCommentFromInputBox();
-    });
+// directive from http://stackoverflow.com/a/17472118
+app.directive('ngEnter', function() {
+    return function(scope, element, attrs) {
+        element.bind("keydown keypress", function(event) {
+            if (event.which === 13) {
+                scope.$apply(function() {
+                    scope.$eval(attrs.ngEnter);
+                });
 
-    $(".comment-input input").on("keypress", function (event) {
-        if (event.keyCode === 13) {
-            addCommentFromInputBox();
-        }
-    });
-};
-
-$(document).ready(main);
+                event.preventDefault();
+            }
+        });
+    };
+});
